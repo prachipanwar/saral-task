@@ -122,7 +122,7 @@ export default function RewardSelector({
             <Button
               variant="outline"
               className="flex-1"
-              onClick={() => setOpen(false)}
+              onClick={() => {setOpen(false)}}
             >
               Cancel
             </Button>

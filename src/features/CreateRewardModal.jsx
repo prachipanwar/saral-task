@@ -119,6 +119,7 @@ export default function CreateRewardModal({ open, setOpen }) {
           onChange={setEvent}
           open={eventOpen}
           setOpen={setEventOpen}
+          resetForm = {resetForm}
         />
 
         <RewardSelector
@@ -147,7 +148,11 @@ export default function CreateRewardModal({ open, setOpen }) {
     text-gray-700
     hover:bg-gray-50
   "
-            onClick={() => setOpen(false)}
+            onClick={() => {
+              resetForm();
+
+              setOpen(false);
+            }}
           >
             Cancel
           </Button>

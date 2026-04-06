@@ -22,6 +22,7 @@ export default function EventSelector({
   onChange,
   open,
   setOpen,
+  resetForm
 }) {
   const updateConfig = (key, val) => {
     onChange({
@@ -146,7 +147,7 @@ export default function EventSelector({
             <Button
               variant="outline"
               className="flex-1 h-10 border-gray-300 text-gray-700 hover:bg-gray-50"
-              onClick={() => setOpen(false)}
+              onClick={() => {resetForm(); setOpen(false)}}
             >
               Cancel
             </Button>
