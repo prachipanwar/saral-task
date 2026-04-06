@@ -39,6 +39,7 @@ export default function TimeBoundSelector({
           <PopoverContent>
             <Calendar mode="single" selected={date} onSelect={onDateChange} 
               className="rounded-xs border [--cell-size:--spacing(9)]"
+              disabled={{ before: new Date() }}
               />
           </PopoverContent>
         </Popover>
