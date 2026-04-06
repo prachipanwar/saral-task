@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import { toast } from "sonner";
 import {
   Dialog,
   DialogContent,
@@ -20,26 +20,64 @@ import EventSelector from "./RewardModel/EventSelector";
 import RewardSelector from "./RewardModel/RewardSelector";
 import TimeBoundSelector from "./RewardModel/TimeBoundSelector";
 
-export default function CreateRewardModal({ open, setOpen }) {
-  const [event, setEvent] = useState({
-    type: "",
-    config: {},
-  });
+const INITIAL_EVENT = {
+  type: "",
+  config: {},
+};
 
-  const [reward, setReward] = useState({
-    type: "",
-    config: {
-      amount: "",
-      tierId: "",
-    },
-  });
-  const isTierDisabled = event.type === "posts" || event.type === "onboard";
+const INITIAL_REWARD = {
+  type: "",
+  config: {
+    amount: "",
+    tierId: "",
+  },
+};
+
+export default function CreateRewardModal({ open, setOpen }) {
+  const [event, setEvent] = useState(INITIAL_EVENT);
+
+  const [reward, setReward] = useState(INITIAL_REWARD);
 
   const [timeBound, setTimeBound] = useState(false);
+
   const [date, setDate] = useState(null);
+  const isTierDisabled = event.type === "posts" || event.type === "onboard";
 
   const [eventOpen, setEventOpen] = useState(false);
   const [rewardOpen, setRewardOpen] = useState(false);
+
+  function buildSummary() {
+    const eventMap = {
+      sales: `Cross $${event.config.amount} in sales`,
+      posts: `Post ${event.config.count} times every ${event.config.duration}`,
+      onboard: "User is onboarded",
+    };
+
+    const rewardMap = {
+      bonus: `Flat $${reward.config.amount} bonus`,
+      tier: `Upgrade to ${reward.config.tierId} tier`,
+    };
+
+    return `
+      ${eventMap[event.type]}
+      →
+      ${rewardMap[reward.type]}
+      ${timeBound ? `• valid till ${date?.toLocaleDateString()}` : ""}
+    `;
+  }
+  function resetForm() {
+    setEvent(INITIAL_EVENT);
+
+    setReward(INITIAL_REWARD);
+
+    setTimeBound(false);
+
+    setDate(null);
+
+    setEventOpen(false);
+
+    setRewardOpen(false);
+  }
 
   function isValid() {
     console.log("isValid →", event.type, reward.type, reward.config);
@@ -55,6 +93,17 @@ export default function CreateRewardModal({ open, setOpen }) {
     if (reward.type === "tier" && !reward.config.tierId) return false;
 
     return true;
+  }
+  function handleCreateReward() {
+    toast.success("Your reward has been successfully created", {
+      position: "top-center",
+      description: buildSummary(),
+      duration: 4000,
+    });
+
+    resetForm();
+
+    setOpen(false);
   }
 
   return (
@@ -102,9 +151,6 @@ export default function CreateRewardModal({ open, setOpen }) {
           >
             Cancel
           </Button>
-
-          {/* create reward */}
-
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -123,6 +169,7 @@ export default function CreateRewardModal({ open, setOpen }) {
             disabled:hover:from-pink-500
             disabled:hover:to-purple-600
           "
+                    onClick={handleCreateReward}
                   >
                     Create reward
                   </Button>

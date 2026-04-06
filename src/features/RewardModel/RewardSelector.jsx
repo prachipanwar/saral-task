@@ -74,8 +74,6 @@ export default function RewardSelector({
         </PopoverTrigger>
 
         <PopoverContent className="space-y-2 w-72">
-          {/* BONUS */}
-
           <div className="cursor-pointer" onClick={() => selectType("bonus")}>
             Flat $X bonus
           </div>
@@ -87,8 +85,6 @@ export default function RewardSelector({
               onChange={(e) => updateConfig("amount", e.target.value)}
             />
           )}
-
-          {/* TIER */}
 
           <div
             className={`
@@ -122,9 +118,6 @@ export default function RewardSelector({
               </SelectContent>
             </Select>
           )}
-
-          {/* FOOTER */}
-
           <div className="flex gap-3 pt-2">
             <Button
               variant="outline"

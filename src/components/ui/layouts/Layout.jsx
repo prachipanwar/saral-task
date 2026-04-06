@@ -1,5 +1,6 @@
 import Sidebar from "./Sidebar"
 import Navbar from "./Navbar"
+import { Toaster } from "@/components/ui/sonner"
 
 export default function Layout({ children }) {
   return (
@@ -13,6 +14,7 @@ export default function Layout({ children }) {
         <main className="p-10">
           {children}
         </main>
+        <Toaster />
 
       </div>
 

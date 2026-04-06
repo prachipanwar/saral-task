@@ -1,12 +1,8 @@
-import './App.css'
-import { Button } from "@/components/ui/button"
-import GamificationPage from './features/GamificationPage'
+import "./App.css";
+import GamificationPage from "./features/GamificationPage";
 
 function App() {
-
-  return (
-    <GamificationPage />
-  )
+  return <GamificationPage />;
 }
 
-export default App
+export default App;
